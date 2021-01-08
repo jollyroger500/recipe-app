@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import { NavBar } from '../components'
-import { MealsList, MealsInsert, MealsUpdate } from '../pages'
+import { MealsList, MealsInsert, MealsUpdate, MealsListVote } from '../pages'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -18,6 +18,7 @@ function App() {
                     exact
                     component={MealsUpdate}
                 />
+                <Route path="/meals/vote" exact component={MealsListVote} />               
             </Switch>
         </Router>
     )

@@ -33,6 +33,11 @@ class Links extends Component {
                                 Create Meal
                             </Link>
                         </Item>
+                        <Item>
+                            <Link to="/meals/vote" className="nav-link">
+                                Vote Meal
+                            </Link>
+                        </Item>                        
                     </List>
                 </Collapse>
             </React.Fragment>

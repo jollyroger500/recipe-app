@@ -10,17 +10,29 @@ const Wrapper = styled.div`
     padding: 0 40px 40px 40px;
 `
 
-const Update = styled.div`
+const Voteup = styled.div`
     color: #ef9b0f;
     cursor: pointer;
 `
 
-const Delete = styled.div`
+const Votedown = styled.div`
     color: #ff0000;
     cursor: pointer;
 `
 
-class UpdateMeals extends Component {
+class DownvoteMeals extends Component {
+ deleteUser = event => {
+     event.preventDefault()
+         api.deleteMealsById(this.props.id)
+         window.location.reload()
+ }
+
+ render() {
+     return <Votedown onClick={this.deleteUser}>Down</Votedown>
+ }
+}
+
+class UpvoteMeals extends Component {
     updateUser = event => {
         event.preventDefault()
 
@@ -28,30 +40,13 @@ class UpdateMeals extends Component {
     }
 
     render() {
-        return <Update onClick={this.updateUser}>Update</Update>
+        return <Voteup onClick={this.updateUser}>Up</Voteup>
     }
 }
 
-class DeleteMeals extends Component {
-    deleteUser = event => {
-        event.preventDefault()
 
-        if (
-            window.confirm(
-                `Do tou want to delete the meal ${this.props.id} permanently?`,
-            )
-        ) {
-            api.deleteMealsById(this.props.id)
-            window.location.reload()
-        }
-    }
 
-    render() {
-        return <Delete onClick={this.deleteUser}>Delete</Delete>
-    }
-}
-
-class MealsList extends Component {
+class MealsListVote extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -96,29 +91,29 @@ class MealsList extends Component {
                 accessor: 'mealtype',
                 filterable: true,            
             },
-                           
+            {
+             Header: '',
+             accessor: '',
+             Cell: function(props) {
+                 return (
+                     <span>
+                         <UpvoteMeals id={props.original._id} />
+                     </span>
+                 )
+             },
+         },             
             {
                 Header: '',
                 accessor: '',
                 Cell: function(props) {
                     return (
                         <span>
-                            <DeleteMeals id={props.original._id} />
+                            <DownvoteMeals id={props.original._id} />
                         </span>
                     )
                 },
             },
-            {
-                Header: '',
-                accessor: '',
-                Cell: function(props) {
-                    return (
-                        <span>
-                            <UpdateMeals id={props.original._id} />
-                        </span>
-                    )
-                },
-            },
+           
         ]
 
         let showTable = true
@@ -143,4 +138,4 @@ class MealsList extends Component {
     }
 }
 
-export default MealsList
+export default MealsListVote

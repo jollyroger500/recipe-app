@@ -43,9 +43,7 @@ class MealsUpdate extends Component {
             id: this.props.match.params.id,
             title: '',
             day: '',
-            mealtype: '',
-            recipe: '',
-            votes: '',            
+            mealtype: '',         
         }
     }
 
@@ -67,19 +65,10 @@ class MealsUpdate extends Component {
         this.setState({ mealtype })
     }
 
-    handleChangeInputRecipe = async event => {
-     const recipe = event.target.value
-     this.setState({ recipe })
-    }
-
-    handleChangeInputVotes = async event => {
-     const votes = event.target.value
-     this.setState({ votes })
-   }
 
     handleUpdateMeal = async () => {
-        const { id, title, day, mealtype, recipe, votes } = this.state
-        const payload = { title, day, mealtype, recipe, votes }
+        const { id, title, day, mealtype } = this.state
+        const payload = { title, day, mealtype }
 
         await api.updateMealsById(id, payload).then(res => {
             window.alert(`Meals updated successfully`)
@@ -87,8 +76,6 @@ class MealsUpdate extends Component {
               title: '',
               day: '',
               mealtype: '',
-              recipe: '',
-              votes: '',   
             })
         })
     }
@@ -101,13 +88,11 @@ class MealsUpdate extends Component {
             title: meals.data.data.title,
             day: meals.data.data.day,
             mealtype: meals.data.data.mealtype,
-            recipe: meals.data.data.recipe,
-            votes: meals.data.data.votes,
         })
     }
 
     render() {
-        const { title, day, mealtype, recipe, votes } = this.state
+        const { title, day, mealtype } = this.state
         return (
             <Wrapper>
                 <Title>Create Meal</Title>
@@ -131,25 +116,6 @@ class MealsUpdate extends Component {
                     type="text"
                     value={mealtype}
                     onChange={this.handleChangeInputMealtype}
-                />
-
-                <Label>Recipe: </Label>
-                <InputText
-                    type="text"
-                    value={recipe}
-                    onChange={this.handleChangeInputRecipe}
-                />
-
-                <Label>Votes: </Label>
-                <InputText
-                    type="number"
-                    step="0.1"
-                    lang="en-US"
-                    min="0"
-                    max="10"
-                    pattern="[0-9]+([,\.][0-9]+)?"
-                    value={votes}
-                    onChange={this.handleChangeInputVotes}
                 />
 
                 <Button onClick={this.handleUpdateMeals}>Update Meal</Button>

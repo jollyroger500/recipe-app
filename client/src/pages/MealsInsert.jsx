@@ -43,8 +43,6 @@ class MealsInsert extends Component {
             title: '',
             day: '',
             mealtype: '',
-            recipe: '',
-            votes: '',
         }
     }
 
@@ -66,19 +64,9 @@ class MealsInsert extends Component {
         this.setState({ mealtype })
     }
 
-    handleChangeInputRecipe= async event => {
-     const recipe = event.target.value
-     this.setState({ recipe })
-    }
-
-    handleChangeInputVotes= async event => {
-     const votes = event.target.value
-     this.setState({ votes })
-   }
-
     handleIncludeMeals = async () => {
-        const { title, day, mealtype, recipe, votes } = this.state
-        const payload = { title, day, mealtype, recipe, votes }
+        const { title, day, mealtype } = this.state
+        const payload = { title, day, mealtype }
 
         await api.insertMeals(payload).then(res => {
             window.alert(`Meal inserted successfully`)
@@ -86,14 +74,12 @@ class MealsInsert extends Component {
                 title: '',
                 day: '',
                 mealtype: '',
-                recipe: '',
-                votes: '',
             })
         })
     }
 
     render() {
-        const { title, day, mealtype, recipe, votes } = this.state
+        const { title, day, mealtype } = this.state
         return (
             <Wrapper>
                 <Title>Create Meal</Title>
@@ -117,25 +103,6 @@ class MealsInsert extends Component {
                     type="text"
                     value={mealtype}
                     onChange={this.handleChangeInputMealtype}
-                />
-
-                <Label>Recipe: </Label>
-                                <InputText
-                                    type="text"
-                                    value={recipe}
-                                    onChange={this.handleChangeInputRecipe}
-                                />
-
-                <Label>Votes: </Label>
-                <InputText
-                    type="number"
-                    step="0.1"
-                    lang="en-US"
-                    min="0"
-                    max="10"
-                    pattern="[0-9]+([,\.][0-9]+)?"
-                    value={votes}
-                    onChange={this.handleChangeInputVotes}
                 />
 
                 <Button onClick={this.handleIncludeMeals}>Add Meals</Button>

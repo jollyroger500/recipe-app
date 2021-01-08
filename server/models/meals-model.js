@@ -6,8 +6,6 @@ var MealsSchema = new Schema(
         title: { type: String, required: true, maxlength:100 },
         day: { type: [String], required: true },
         mealtype: { type: [String], required: false },
-        recipe: [{type: Schema.Types.ObjectId, ref: 'Recipe'}],
-        votes: { type: Number, min:1, max: 50, required: false}
     }
 )
 
@@ -15,7 +13,7 @@ var MealsSchema = new Schema(
 MealsSchema
 .virtual('url')
 .get(function () {
- return '/catalog/book/' + this._id;
+ return '/meals/' + this._id;
 });
 
 //Export model
